@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Valentine Quiz 💗</title>
+
+<!-- Pretty font -->
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #ffd6e8, #ffeef6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .container {
+    background: #fff;
+    width: 90%;
+    max-width: 420px;
+    border-radius: 25px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  h2 {
+    color: #ff5c8a;
+    font-size: 18px;
+  }
+
+  .option {
+    background: #fff0f6;
+    margin: 10px 0;
+    padding: 12px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .option:hover {
+    background: #ffd6e8;
+  }
+
+  .reaction {
+    font-size: 60px;
+    position: absolute;
+    bottom: -90px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: 0.4s;
+  }
+
+  .reaction.show {
+    bottom: 20px;
+    opacity: 1;
+  }
+
+  .final {
+    font-family: 'Pacifico', cursive;
+    font-size: 26px;
+    color: #ff5c8a;
+    padding: 30px;
+    text-transform: uppercase;
+    line-height: 1.4;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="container" id="box">
+  <h2 id="question"></h2>
+  <div id="options"></div>
+  <div class="reaction" id="reaction"></div>
+</div>
+
+<script>
+const quiz = [
+  {
+    q: "Do you remember our anniversary date?",
+    o: ["9th April", "14th February", "I’ll remember next year", "Don’t test me"],
+    a: 0
+  },
+  {
+    q: "What is my favourite body part of you?",
+    o: ["Your eyes", "Your smile", "Your arms", "All of you"],
+    a: 3
+  },
+  {
+    q: "What do I like best?",
+    o: ["Huggi puggi", "Kissi", "Sex", "All of the above"],
+    a: 3
+  },
+  {
+    q: "Where did we have our first ever drink together?",
+    o: ["Blue and Beyond", "McDonalds", "Hoppipola", "Waldorf"],
+    a: 0
+  },
+  {
+    q: "If we were alone right now, what would I probably do first?",
+    o: ["Talk", "Hug", "Kiss", "Smile and pull you closer"],
+    a: 3
+  },
+  {
+    q: "What’s our unofficial love language?",
+    o: ["Words", "Physical touch", "Quality time", "Beating each other (affectionately)"],
+    a: 3
+  },
+  {
+    q: "Which flavour condom did we use?",
+    o: ["Vanilla", "Chocolate", "Strawberry", "Caramel"],
+    a: 1
+  },
+  {
+    q: "So… will you be my Valentine? 💖",
+    o: ["Yes, come here ❤️", "Do I even have an option to say no?"],
+    a: 0
+  }
+];
+
+let index = 0;
+const question = document.getElementById("question");
+const options = document.getElementById("options");
+const reaction = document.getElementById("reaction");
+const box = document.getElementById("box");
+
+function loadQuestion() {
+  reaction.classList.remove("show");
+  options.innerHTML = "";
+  question.innerText = quiz[index].q;
+
+  quiz[index].o.forEach((opt, i) => {
+    const div = document.createElement("div");
+    div.className = "option";
+    div.innerText = opt;
+    div.onclick = () => handleAnswer(i);
+    options.appendChild(div);
+  });
+}
+
+function handleAnswer(selected) {
+  if (selected === quiz[index].a) {
+    reaction.innerText = "🐼💗";
+  } else {
+    reaction.innerText = "😡";
+  }
+
+  reaction.classList.add("show");
+
+  setTimeout(() => {
+    index++;
+    if (index < quiz.length) {
+      loadQuestion();
+    } else {
+      box.innerHTML = `
+        <div class="final">
+          YAYY, I KNEW YOU'D SAY YES 💕<br><br>
+          I LOVE YOU SIDDHU 🐼💗
+        </div>
+      `;
+    }
+  }, 800);
+}
+
+loadQuestion();
+</script>
+
+</body>
+</html>
